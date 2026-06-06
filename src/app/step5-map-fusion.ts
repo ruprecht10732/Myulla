@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-map-fusion',
   imports: [MatIconModule],
   template: `
-    <div class="relative w-full h-full bg-emerald-950 overflow-hidden flex flex-col items-center justify-center cursor-pointer px-6" (click)="onNext()">
+    <div class="relative w-full h-full bg-emerald-950 overflow-hidden flex flex-col items-center justify-center cursor-pointer px-6" tabindex="0" (keydown.enter)="onNext()" (click)="onNext()">
       <!-- Subtle ambient luxury glow -->
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-400/10 via-emerald-950 to-emerald-950 pointer-events-none"></div>
       <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none mix-blend-overlay"></div>

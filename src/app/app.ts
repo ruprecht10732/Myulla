@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FlowService, BirthdayStep } from './flow.service';
+import { FlowService } from './flow.service';
 import { TimeGateComponent } from './step0-time-gate';
 import { CardFlipComponent } from './step1-card-flip';
 import { TypewriterComponent } from './step2-typewriter';

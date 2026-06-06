@@ -17,6 +17,8 @@ import { FlowService } from './flow.service';
         class="relative w-full max-w-md aspect-[3/4] md:aspect-[4/5] cursor-pointer transition-transform duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] z-10"
         style="transform-style:preserve-3d"
         [style.transform]="isFlipped() ? 'rotateY(-180deg) scale(1.1)' : 'rotateY(0deg)'"
+        tabindex="0"
+        (keydown.enter)="flip()"
         (click)="flip()">
         
         <!-- Front -->

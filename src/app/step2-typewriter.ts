@@ -81,6 +81,8 @@ interface FloatingItem {
       </div>
 
       <div class="max-w-3xl w-full flex-grow flex flex-col justify-center relative z-10 font-serif text-base sm:text-xl md:text-2xl leading-[1.6] md:leading-[1.8] text-emerald-50 tracking-wide font-light p-2 sm:p-8 border-l border-white/5 overflow-y-auto pb-32 cursor-pointer"
+           tabindex="0"
+           (keydown.enter)="skipTyping()"
            (click)="skipTyping()">
         
         <p class="whitespace-pre-wrap drop-shadow-md mb-24">
@@ -141,7 +143,7 @@ export class TypewriterComponent implements OnInit {
     // Add brief initial pause for dramatic effect
     await new Promise(r => setTimeout(r, 800));
 
-    for (let char of chars) {
+    for (const char of chars) {
       if (this.abortTyping) break;
 
       current += char;

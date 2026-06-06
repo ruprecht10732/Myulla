@@ -21,39 +21,45 @@ import { MatIconModule } from '@angular/material/icon';
       </div>
 
     <!-- Main Image with Ken Burns -->
-    <div class="absolute inset-0 z-0 bg-emerald-950" (click)="onNext()">
+    <div class="absolute inset-0 z-0 bg-emerald-950 cursor-pointer" tabindex="0" (keydown.enter)="onNext()" (click)="onNext()">
       <!-- Show uploaded image or a placeholder -->
-      <img *ngIf="customImage"
+      @if (customImage) {
+      <img
         [src]="customImage" 
         (error)="customImage = null"
         alt="Spotlight"
         id="spotlight-image"
         class="w-full h-full object-contain object-top transform-gpu will-change-transform opacity-95 mix-blend-lighten"
       />
-      
+      } @else {
       <!-- Placeholder if no image is uploaded -->
-      <div *ngIf="!customImage" id="spotlight-image" class="w-full h-full flex flex-col items-center justify-center bg-emerald-900 opacity-80">
+      <div id="spotlight-image" class="w-full h-full flex flex-col items-center justify-center bg-emerald-900 opacity-80">
          <mat-icon class="text-gold/20 w-24 h-24 mb-4" style="font-size: 96px; width: 96px; height: 96px;">volunteer_activism</mat-icon>
          <p class="text-emerald-300 font-serif tracking-widest uppercase text-xs">Upload her photo</p>
       </div>
+      }
     </div><!-- End main image -->
 
     <!-- Prominent Photo Picker (Hidden once uploaded) -->
-    <div class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none" *ngIf="!customImage">
+    @if (!customImage) {
+    <div class="absolute inset-0 z-50 flex items-center justify-center pointer-events-none">
        <input type="file" #fileInput (change)="onImageUpload($event)" class="hidden" accept="image/*" />
        <button (click)="fileInput.click()" class="pointer-events-auto flex items-center gap-3 bg-white/5 hover:bg-white/10 text-emerald-100 rounded-full px-8 py-4 backdrop-blur-md transition-all shadow-[0_0_40px_rgba(255,192,0,0.1)] border border-white/10">
           <mat-icon class="text-gold">photo_camera</mat-icon>
           <span class="font-sans tracking-widest uppercase text-xs font-bold">Adicionar Foto</span>
        </button>
     </div>
+    }
     
     <!-- Small Photo Picker (Always visible in corner to change later) -->
-    <div class="absolute top-8 right-8 z-50 pointer-events-auto" *ngIf="customImage">
+    @if (customImage) {
+    <div class="absolute top-8 right-8 z-50 pointer-events-auto">
        <input type="file" #fileInputSmall (change)="onImageUpload($event)" class="hidden" accept="image/*" />
        <button (click)="fileInputSmall.click()" class="bg-black/50 hover:bg-black/80 text-emerald-200 hover:text-gold rounded-full p-3 backdrop-blur-md transition-all shadow-lg border border-white/5">
           <mat-icon>edit</mat-icon>
        </button>
     </div>
+    }
 
     <!-- Gradient Overlay & Text -->
     <div class="relative z-20 w-full bg-gradient-to-t from-emerald-950 via-emerald-950/80 to-transparent pt-40 pb-16 px-8 md:px-24 pointer-events-none">
@@ -138,16 +144,17 @@ export class SpotlightComponent implements AfterViewInit {
     }
   }
 
-  onImageUpload(event: any) {
-    const file = event.target.files[0];
+  onImageUpload(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.customImage = e.target.result;
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.customImage = e.target?.result as string;
         try {
            localStorage.setItem('myulla_spotlight_img', this.customImage as string);
-        } catch (e) {
-           console.warn('Image too large for localStorage, it will only be kept in memory for this session.', e);
+        } catch (err) {
+           console.warn('Image too large for localStorage, it will only be kept in memory for this session.', err);
         }
       };
       reader.readAsDataURL(file);

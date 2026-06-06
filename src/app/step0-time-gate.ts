@@ -54,7 +54,7 @@ export class TimeGateComponent implements OnInit, OnDestroy {
   targetDate = new Date('2026-06-07T03:00:00Z').getTime(); // Teresina 00:00 is 03:00 UTC
   countdownText = signal('00d : 00h : 00m : 00s');
   targetReached = signal(false);
-  intervalId: any;
+  intervalId: ReturnType<typeof setInterval> | undefined;
   platformId = inject(PLATFORM_ID);
 
   async ngOnInit() {
