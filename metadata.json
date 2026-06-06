@@ -1,0 +1,6 @@
+{
+  "name": "The Distance Bridger",
+  "description": "A highly interactive, emotional birthday experience bridging the distance through design, animation, and interaction.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
