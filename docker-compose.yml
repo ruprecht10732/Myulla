@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: myulla-birthday-app
+    container_name: myulla_app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      # - BYPASS_TIME_GATE=true # Uncomment this to test instantly skipping the countdown gate
+    restart: unless-stopped
